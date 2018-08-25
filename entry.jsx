@@ -4,7 +4,6 @@ import Root from './frontend/root';
 import configureStore from './frontend/store/store';
 
 document.addEventListener('DOMContentLoaded', () => {
-  debugger
   let store;
   store = configureStore();
   window.getState = store.getState;

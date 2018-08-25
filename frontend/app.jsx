@@ -2,7 +2,10 @@ import React from 'react';
 import ImportForm from './components/formInput/input';
 const App = () => (
   <div id="app">
-    <h1>This is the app</h1>
+    <div className="main-header">
+      <h1>EasyKnockChallenge</h1>
+    </div>
+
     <ImportForm />
   </div>
 );
