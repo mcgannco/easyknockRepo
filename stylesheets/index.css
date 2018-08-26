@@ -39,7 +39,6 @@ body {
 #app {
   height: 100%;
   width: 100%;
-  background: #F0F0F0;
 }
 
 .main-header {
@@ -91,6 +90,7 @@ body {
   padding: 5px;
   margin-bottom: 8px;
   border-radius: 5px;
+  border: 1px solid grey;
 }
 
 .input-form input:focus {
@@ -217,13 +217,16 @@ button:hover {
 .table-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 .table-table {
   display: flex;
   justify-content: center;
   flex-direction: column;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .table-table h3 {
@@ -231,4 +234,9 @@ button:hover {
   justify-content: center;
   color: green;
   border-bottom: 1px solid green;
+}
+
+.rowseperator {
+  border-bottom: 1px solid green;
+
 }

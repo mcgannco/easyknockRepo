@@ -7,6 +7,7 @@ class OutputTable extends React.Component {
 
     }
     this.getVals = this.getVals.bind(this);
+    this.getNestedCompVals = this.getNestedCompVals.bind(this);
   }
 
   drawTable() {
@@ -14,6 +15,28 @@ class OutputTable extends React.Component {
     let rows = Object.keys(property).slice(1)
     let addressKeys = Object.keys(property.address)
     let addressVals = this.getVals(property.address, addressKeys)
+
+    let boundKeys = Object.keys(property.boundaries)
+    let boundVals = this.getVals(property.boundaries, boundKeys)
+
+    let metaKeys = Object.keys(property.metadata)
+    let metaVals = this.getVals(property.metadata, metaKeys)
+
+    let postKeys = Object.keys(property.postal)
+    let postVals = this.getVals(property.postal, postKeys)
+
+    let siteKeys = Object.keys(property.site)
+    let siteVals = this.getVals(property.site, siteKeys)
+
+    let statusKeys = Object.keys(property.status)
+    let statusVals = this.getVals(property.status, statusKeys)
+
+    let valuationKeys = Object.keys(property.status)
+    let valuationVals = this.getVals(property.status, valuationKeys)
+
+    let compVals = this.getNestedCompVals(property.comparables)
+
+
     return <div className="table-container">
       <div className="table-table">
         <h3>Address</h3>
@@ -23,60 +46,55 @@ class OutputTable extends React.Component {
       </div>
 
       <div className="table-table">
-        <h3>Other</h3>
+        <h3>Boundaries</h3>
         <table>
-          {addressVals}
+          {boundVals}
         </table>
       </div>
 
       <div className="table-table">
-        <h3>Other</h3>
+        <h3>Comparables</h3>
         <table>
-          {addressVals}
+          {compVals}
         </table>
       </div>
 
       <div className="table-table">
-        <h3>Other</h3>
+        <h3>MetaData</h3>
         <table>
-          {addressVals}
+          {metaVals}
         </table>
       </div>
 
       <div className="table-table">
-        <h3>Other</h3>
+        <h3>Postal</h3>
         <table>
-          {addressVals}
+          {postVals}
         </table>
       </div>
 
       <div className="table-table">
-        <h3>Other</h3>
+        <h3>Site</h3>
         <table>
-          {addressVals}
+          {siteVals}
         </table>
       </div>
 
       <div className="table-table">
-        <h3>Other</h3>
+        <h3>Status</h3>
         <table>
-          {addressVals}
+          {statusVals}
         </table>
       </div>
 
       <div className="table-table">
-        <h3>Other</h3>
+        <h3>Valuation</h3>
         <table>
-          {addressVals}
+          {valuationVals}
         </table>
       </div>
 
-      <div className="table-table">
-        <h3>Other</h3>
-        <table>
-          {addressVals}
-        </table>
-      </div>
+
 
 
     </div>
@@ -95,6 +113,45 @@ class OutputTable extends React.Component {
          </tr>);
     }
     return items;
+  }
+
+  getNestedCompVals(vals) {
+    let items = [];
+    for (let i = 0; i < vals.length; i++) {
+      let met = Object.keys(vals[i].property.metadata)
+      let address = Object.keys(vals[i].property.address)
+
+      for (let j = 0; j < met.length; j++) {
+        let val = vals[i].property.metadata[met[j]];
+        if(val === null) {
+          val = "n/a"
+        }
+        items.push(<tr key={i}>
+          <td>{met[j]}</td>
+          <td>{vals[i].property.metadata[met[j]]}</td>
+        </tr>);
+      }
+
+      for (let k = 0; k < address.length; k++) {
+        let val = vals[i].property.address[address[k]];
+        if(val === null) {
+          val = "n/a"
+        }
+        items.push(<tr key={i}>
+          <td>{address[k]}</td>
+          <td>{vals[i].property.address[address[k]]}</td>
+        </tr>);
+
+        if(address[k] === "longitude" && (vals.length > 1) && (i < vals.length - 1)) {
+          items.push(<tr key={i}>
+            <td className="rowseperator"></td>
+            <td className="rowseperator"></td>
+          </tr>)
+        }
+      }
+      return items;
+
+    }
   }
 
   render() {

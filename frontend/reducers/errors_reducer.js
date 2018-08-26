@@ -1,4 +1,4 @@
-import { RECEIVE_SEARCH_ERRORS, CLEAR_ERRORS } from '../actions/property_actions';
+import { RECEIVE_SEARCH_ERRORS, CLEAR_ERRORS, RECEIVE_DATA } from '../actions/property_actions';
 import merge from 'lodash/merge';
 
 const errorsReducer =  (state = {}, action) => {
@@ -8,6 +8,8 @@ const errorsReducer =  (state = {}, action) => {
     case RECEIVE_SEARCH_ERRORS:
       return(merge({}, state, action.data));
     case CLEAR_ERRORS:
+      return {};
+    case RECEIVE_DATA:
       return {};
     default:
       return state;
