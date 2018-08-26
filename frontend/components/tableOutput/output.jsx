@@ -279,7 +279,11 @@ class OutputTable extends React.Component {
 
   render() {
     let {errors, status, loading} = this.props;
-    if(errors.message) {
+    if(loading) {
+      return <section className="spinner-container">
+        <div className="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>;
+      </section>
+    } else if(errors.message) {
       return <div className="error-message">
         <h2>{errors.message}</h2>
       </div>
@@ -289,10 +293,6 @@ class OutputTable extends React.Component {
         <input className="filter" onChange={this.filter} placeholder="Filter"></input>
         {table}
       </div>
-    } else if(loading) {
-      return <section className="spinner-container">
-        <div className="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>;
-      </section>
     } else {
       return null
     }
