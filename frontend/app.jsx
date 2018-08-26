@@ -1,12 +1,14 @@
 import React from 'react';
-import ImportForm from './components/formInput/input';
+import ImportFormContainer from './components/formInput/input_container';
+import TableOutputontainer from './components/tableOutput/output_container';
 const App = () => (
   <div id="app">
     <div className="main-header">
       <h1>EasyKnockChallenge</h1>
     </div>
 
-    <ImportForm />
+    <ImportFormContainer />
+    <TableOutputontainer />
   </div>
 );
 

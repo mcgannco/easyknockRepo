@@ -45,8 +45,8 @@ class InputForm extends React.Component {
  submit(e) {
    e.preventDefault();
    if(this.validRequest()) {
-     
-     debugger
+     let address = this.state.address.split(" ").join("+");
+     this.props.fetchProperty(address, this.state.city, this.state.state, parseInt(this.state.zip))
    } else {
 
    }
