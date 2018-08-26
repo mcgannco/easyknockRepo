@@ -84,7 +84,7 @@ body {
   flex-direction: column;
 }
 
-.input-form input {
+.input-input-input {
   background: white;
   text-align: left;
   padding: 5px;
@@ -93,7 +93,20 @@ body {
   border: 1px solid grey;
 }
 
-.input-form input:focus {
+.input-input-input:focus {
+  border: 1px solid green;
+}
+
+.input-errors {
+  background: white;
+  text-align: left;
+  padding: 5px;
+  margin-bottom: 8px;
+  border-radius: 5px;
+  border: 1px solid red;
+}
+
+.input-errors:focus {
   border: 1px solid green;
 }
 .city-state {
@@ -254,4 +267,9 @@ button:hover {
   width: 214px;
   border-radius: 6px;
   background: #E1FDC1;
+}
+
+h2 {
+  display: flex;
+  justify-content: center;
 }

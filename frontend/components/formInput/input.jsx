@@ -11,7 +11,10 @@ class InputForm extends React.Component {
        address: null,
        city: null,
        state: null,
-       zip: null
+       zip: null,
+       zipErrors: null,
+       addressErrors: null,
+       cityErrors: null
     }
     this.createSelectItems = this.createSelectItems.bind(this)
     this.updateInput = this.updateInput.bind(this)
@@ -59,16 +62,29 @@ class InputForm extends React.Component {
   if(this.state.zip && this.state.zip.length && this.state.zip.match(/^-{0,1}\d+$/) && this.state.zip.length === 5){
     if(parseInt(this.state.zip) >= 0) {
       validZip = true;
+      this.setState({zipErrors: null})
+    } else {
+      this.setState({zipErrors: true})
     }
+  } else {
+    this.setState({zipErrors: true})
   }
   if(this.state.address) {
     validAddress = true
+    this.setState({addressErrors: null})
+  } else {
+    this.setState({addressErrors: true})
   }
+
   if(this.state.city) {
     validCity = true
+    this.setState({cityErrors: null})
+  } else {
+    this.setState({cityErrors: true})
   }
 
   if(validZip && validAddress && validCity) {
+    this.setState({zipErrors: null, addressErrors: null, cityErrors: null})
     return true;
   }
  }
@@ -80,14 +96,14 @@ class InputForm extends React.Component {
         <div className="input-form-container">
           <h1>Property Input</h1>
           <form className="input-form">
-            <input onChange={(e) => this.updateInput(e, "address")} placeholder="Street Address"></input>
+            <input className={this.state.addressErrors ? "input-errors" : "input-input-input"} onChange={(e) => this.updateInput(e, "address")} placeholder="Street Address"></input>
             <div className="city-state">
-              <input onChange={(e) => this.updateInput(e, "city")} placeholder="City"></input>
+              <input className={this.state.cityErrors ? "input-errors" : "input-input-input"} onChange={(e) => this.updateInput(e, "city")} placeholder="City"></input>
               <select onChange={(e) => this.updateInput(e, "state")}>
                 {optionList}
               </select>
             </div>
-            <input onChange={(e) => this.updateInput(e, "zip")} placeholder="Zip Code"></input>
+            <input className={this.state.zipErrors ? "input-errors" : "input-input-input"} onChange={(e) => this.updateInput(e, "zip")} placeholder="Zip Code"></input>
             <div className="submit-container">
               <button onClick={this.submit}>Search</button>
             </div>
