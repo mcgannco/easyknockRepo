@@ -4,11 +4,16 @@ class OutputTable extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-
+      filter: ""
     }
     this.getVals = this.getVals.bind(this);
     this.getNestedCompVals = this.getNestedCompVals.bind(this);
     this.getNestedVals = this.getNestedVals.bind(this);
+    this.filter = this.filter.bind(this);
+    this.displayResult = this.displayResult.bind(this);
+    this.unhideAll = this.unhideAll.bind(this);
+    this.unhideTable = this.unhideTable.bind(this);
+    this.checkRows = this.checkRows.bind(this);
   }
 
   drawTable() {
@@ -188,7 +193,6 @@ class OutputTable extends React.Component {
         }
       }
       return items;
-
     }
   }
 
@@ -214,6 +218,65 @@ class OutputTable extends React.Component {
     return items
   }
 
+  filter(e) {
+    this.setState({filter: e.currentTarget.value})
+    this.displayResult(e.currentTarget.value)
+  }
+
+  displayResult(filter) {
+    if(filter === "") {
+      this.unhideAll();
+    } else {
+      let allTables = $(".table-table");
+      for (let i = 0; i < allTables.length; i++) {
+        let currentTable = allTables[i];
+        let currentHeader = $(currentTable).children()[0].innerHTML
+        if(currentHeader.toLowerCase().includes(filter.toLowerCase())) {
+          this.unhideTable(currentTable);
+        } else {
+          this.checkRows(filter, currentTable);
+        }
+      }
+    }
+  }
+
+  checkRows(filter, Table) {
+    let rows = $($(Table).children()[1]).children();
+    let empty = 0;
+    for (let i = 0; i < rows.length; i++) {
+      let rowText = rows[i].children[0].innerText;
+      let rowEl = rows[i];
+      if(rowText.toLowerCase().includes(filter)) {
+        $(Table).show()
+        $(rowEl).show()
+        $(rowEl).children().show()
+      } else {
+        $(rowEl).hide()
+        empty+= 1;
+      }
+    }
+    if(rows.length === empty) {
+      $(Table).hide()
+    }
+  }
+
+  unhideTable(Table) {
+    $(Table).show()
+    $(Table).children().show()
+    $($(Table).children()[0]).show()
+    $($(Table).children()[1]).children().show()
+  }
+
+  unhideAll() {
+    let allTables = $(".table-container").children();
+    for (let i = 0; i < allTables.length; i++) {
+      let currentTable = allTables[i];
+      $(currentTable).show()
+      $($(currentTable).children()[0]).show()
+      $($(currentTable).children()[1]).children().show()
+    }
+  }
+
   render() {
     let {errors, status, loading} = this.props;
     if(errors.message) {
@@ -222,7 +285,8 @@ class OutputTable extends React.Component {
       </div>
     } else if(status === "success") {
       let table = this.drawTable();
-      return <div>
+      return <div className="result-container">
+        <input className="filter" onChange={this.filter} placeholder="Filter"></input>
         {table}
       </div>
     } else if(loading) {
