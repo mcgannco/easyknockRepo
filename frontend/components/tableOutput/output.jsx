@@ -8,6 +8,7 @@ class OutputTable extends React.Component {
     }
     this.getVals = this.getVals.bind(this);
     this.getNestedCompVals = this.getNestedCompVals.bind(this);
+    this.getNestedVals = this.getNestedVals.bind(this);
   }
 
   drawTable() {
@@ -35,6 +36,11 @@ class OutputTable extends React.Component {
     let valuationVals = this.getVals(property.status, valuationKeys)
 
     let compVals = this.getNestedCompVals(property.comparables)
+    let mortgageVals = this.getNestedVals(property.mortgages)
+    let ownersVals = this.getNestedVals(property.owners)
+    let salesVals = this.getNestedVals(property.sales)
+    let structuresVals = this.getNestedVals(property.structures)
+    let taxesVals = this.getNestedVals(property.taxes)
 
 
     return <div className="table-container">
@@ -67,16 +73,9 @@ class OutputTable extends React.Component {
       </div>
 
       <div className="table-table">
-        <h3>Postal</h3>
+        <h3>Mortgages</h3>
         <table>
-          {postVals}
-        </table>
-      </div>
-
-      <div className="table-table">
-        <h3>Site</h3>
-        <table>
-          {siteVals}
+          {mortgageVals}
         </table>
       </div>
 
@@ -88,14 +87,53 @@ class OutputTable extends React.Component {
       </div>
 
       <div className="table-table">
+        <h3>Postal</h3>
+        <table>
+          {postVals}
+        </table>
+      </div>
+
+      <div className="table-table">
+        <h3>Sales</h3>
+        <table>
+          {salesVals}
+        </table>
+      </div>
+
+      <div className="table-table">
+        <h3>Site</h3>
+        <table>
+          {siteVals}
+        </table>
+      </div>
+
+      <div className="table-table">
+        <h3>Owners</h3>
+        <table>
+          {ownersVals}
+        </table>
+      </div>
+
+      <div className="table-table">
+        <h3>Structures</h3>
+        <table>
+          {structuresVals}
+        </table>
+      </div>
+
+      <div className="table-table">
+        <h3>Taxes</h3>
+        <table>
+          {taxesVals}
+        </table>
+      </div>
+
+      <div className="table-table">
         <h3>Valuation</h3>
         <table>
           {valuationVals}
         </table>
       </div>
-
-
-
 
     </div>
   }
@@ -152,6 +190,28 @@ class OutputTable extends React.Component {
       return items;
 
     }
+  }
+
+  getNestedVals(vals) {
+    let items = [];
+    for (let i = 0; i < vals.length; i++) {
+      let el = vals[i]
+      let keys = Object.keys(vals[i]);
+      for (let j = 0; j < keys.length; j++) {
+        items.push(<tr key={i}>
+          <td>{keys[j]}</td>
+          <td>{vals[i][keys[j]]}</td>
+        </tr>);
+
+        if(j === keys.length - 1) {
+          items.push(<tr key={i}>
+            <td className="rowseperator"></td>
+            <td className="rowseperator"></td>
+          </tr>)
+        }
+      }
+    }
+    return items
   }
 
   render() {
